@@ -1,9 +1,9 @@
 <template>
   <div class="mr-2">
-    <div class="mb-2">
+    <div class="mb-2" v-if="dataNear">
       <div class="h4 font-weight-bold text-white">Đặt đồ ăn</div>
-      <div class="font-weight-bold text-white">
-        Có $x địa điểm ở $y từ 06:00 - 17:00
+      <div class="font-weight-bold text-white" v-if="dataNear.data">
+        Có {{dataNear.data.count}} món ăn ở gần bạn
       </div>
     </div>
     <div class="mb-4">
@@ -44,5 +44,30 @@
 import Tag from "./Tag.vue";
 export default {
   components: { Tag },
+  props: ["locationData"],
+  data(){
+    return {
+      dataNear: null
+    }
+  },
+  beforeMount(){
+    this.getDataNear()
+  },
+  methods: {
+    getDataNear() {
+      var self = this;
+      Vue.axios
+        .get(
+          `/api/locations/getNear?location_id=${this.locationData.province.province_id}`
+        )
+        .then((response) => {
+          var data = response.data;
+          self.dataNear = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
 };
 </script>

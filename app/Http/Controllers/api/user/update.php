@@ -22,6 +22,10 @@ class update extends Controller
                 $user = User::find($request->get("id"));
                 $user->name = $request->post("name");
                 $user->email = $request->post("email");
+                if ($request->post("long") && $request->post("lat")) {
+                    $user->longitude = $request->post("long");
+                    $user->latitude = $request->post("lat");
+                }
                 $user->save();
                 return response()->json([
                     "status" => true,
@@ -29,7 +33,7 @@ class update extends Controller
                 ]);
             } else { //In user profile
                 $validator = $this->store($request);
-                if($validator) return $validator;
+                if ($validator) return $validator;
                 $user = User::find($user->id);
                 $user->name = $request->post("name");
                 $user->email = $request->post("email");
@@ -58,7 +62,7 @@ class update extends Controller
             'required' => ':attribute không được để trống',
             'email.email' => 'Email không hợp lệ',
             'email.unique' => 'Email này đã được sử dụng',
-            'min' => ':attribute ít nhất :min ký tự',       
+            'min' => ':attribute ít nhất :min ký tự',
         ];
         $attributes = [
             'email' => "Email",
@@ -70,7 +74,28 @@ class update extends Controller
             return response()->json([
                 "status" => false,
                 "msg" => $errors->first()
-            ],500);
+            ], 500);
+        }
+    }
+    public function updateCoord(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user = User::find($user->id);
+            if ($request->post("long") && $request->post("lat")) {
+                $user->longitude = $request->post("long");
+                $user->latitude = $request->post("lat");
+            }
+            $user->save();
+            return response()->json([
+                "status" => true,
+                "msg" => "Cập nhật thành công!"
+            ]);
+        } else {
+            return response()->json([
+                "status" => false,
+                "msg" => "Vui lòng đăng nhập và thử lại!"
+            ], 403);
         }
     }
 }

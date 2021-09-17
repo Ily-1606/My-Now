@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api\bills;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bill;
+use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -40,7 +42,8 @@ class create extends Controller
                             "numberphone" => $dataPhone,
                             "note"  => $orderNote,
                             "money" =>  $product["total_money"],
-                            "status" => "created"
+                            "status" => "created",
+                            "cost_ship" => $product["cost_ship"]
                         ]);
                     }
                     $cart = [];
@@ -57,7 +60,8 @@ class create extends Controller
                     "numberphone" => $dataPhone,
                     "note"  => $orderNote,
                     "money" =>  $product["total_money"],
-                    "status" => "created"
+                    "status" => "created",
+                    "cost_ship" => $product["cost_ship"]
                 ]);
             }
             return response()->json([

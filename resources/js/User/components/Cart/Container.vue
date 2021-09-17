@@ -64,6 +64,7 @@
                     :sales="item.sales"
                     :total_money="item.total_money"
                     :url="item.url"
+                    :cost_ship="item.cost_ship"
                     :order_time="item.order_time"
                     :product_id="item.product_id"
                     :function_delete="deleteCartItem"
@@ -75,7 +76,7 @@
                   Tổng thanh toán là: {{ total_order_money }} VND
                 </div>
                 <div class="col text-right">
-                  <button class="btn btn-primary" @click="handleConfirm">
+                  <button class="btn btn-primary" @click="handleConfirmAll">
                     Thanh toán
                   </button>
                 </div>
@@ -114,6 +115,10 @@ export default {
     this.fetchCart();
     this.$on("deleteItem", (product_id) => {
       this.deleteCartItem(product_id);
+    });
+    this.$on("orderItem", product_id =>{
+      this.handleConfirm();
+      this.product_id_ordering = product_id;
     });
     var dataLocation = window.localStorage.getItem("dataLocation");
     if (dataLocation) {
@@ -160,6 +165,10 @@ export default {
           console.error(error);
         });
     },
+    handleConfirmAll(){
+      this.product_id_ordering = "all";
+      this.handleConfirm()
+    },
     handleConfirm() {
       $("#ChosseLocation").modal("toggle");
     },
@@ -197,6 +206,7 @@ export default {
             self.confirming = false;
             self.fetchCart();
             self.$root.$emit("onUpdateCart", true);
+            self.handleConfirm()
           }
         })
         .catch((error) => {

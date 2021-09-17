@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Http\Controllers\api\posts\info as InfoPost;
 use Carbon\Carbon;
+use App\Http\Controllers\functions\Distance;
 
 class remember extends Controller
 {
@@ -17,7 +18,7 @@ class remember extends Controller
     }
     public function set(Request $request)
     {
-        if ($request->get("id") && $request->get("salary")) {
+        if ($request->get("id") && $request->get("salary") && $request->get("lat") && $request->get("long")) {
             $product_id = $request->get("id");
             $salary = $request->get("salary");
             $cart = [];
@@ -25,9 +26,13 @@ class remember extends Controller
             if ($session->get("cart"))
                 $cart = $session->get("cart");
             $checkSum = true;
-            $product = Posts::select('id', 'name', 'body', 'sales', 'salary', 'money', 'files',)
-                ->where('id', '=', $product_id)->first();
-            $total_money = $salary * ($product->money - $product->sales);
+            $product = Posts::join("users","posts.owner","=","users.id")
+            ->select('posts.id', 'posts.name', 'posts.body', 'posts.sales', 'posts.salary', 'posts.money', 'posts.files',"users.longitude","users.latitude")
+                ->where('posts.id', '=', $product_id)->first();
+            $distance = new Distance();
+            $km = $distance->distance($product["latitude"],$product["longitude"],$request->get("lat"),$request->get("long"));
+            $cost_ship = round($distance->cost_ship($km));
+            $total_money = $salary * ($product->money - $product->sales) + $cost_ship;
             $now = Carbon::now();
             $data = array(
                 "product_id" => $product_id,
@@ -38,6 +43,7 @@ class remember extends Controller
                 "data_product" => $product,
                 "order_time" => $now->format('H:i:s d/m/Y'),
                 "url" => "/product/" . InfoPost::to_slug($product->name) . "-" . $product_id . ".html",
+                "cost_ship" => $cost_ship,
             );
             for ($i = 0; $i < count($cart); $i++) {
                 if ($cart[$i]["product_id"] == $product_id) {

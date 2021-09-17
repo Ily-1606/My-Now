@@ -4,7 +4,7 @@
     <div class="container py-4">
       <div class="row align-items-center">
         <div class="col-md-5 col-sm-12">
-          <left-container></left-container>
+          <left-container :locationData="locationData"></left-container>
         </div>
         <div class="col-md-7 col-sm-12 vh-100 overflow-auto modify-scroll-bar">
           <right-container :locationData="locationData"></right-container>

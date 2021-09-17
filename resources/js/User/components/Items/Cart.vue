@@ -14,6 +14,8 @@
         >
         <span class="font-weight-bold text-primary mx-2" v-if="sales"
           >Đã giảm: {{ sales }} VND</span
+        ><span class="font-weight-bold text-primary mx-2"
+          >Phí vận chuyển: {{ cost_ship }} VND</span
         >
         <span class="font-weight-bold text-success mx-2"
           >Thành tiền: {{ total_money }} VND</span
@@ -38,12 +40,18 @@
             class="text-danger mx-2"
           ></svg-vue>
         </span>
-        <svg-vue
-          icon="check"
-          width="24px"
-          height="24px"
-          class="text-success mx-2"
-        ></svg-vue>
+        <span
+          @click="orderItem(product_id)"
+          :product_id="product_id"
+          class="cursor-pointer"
+        >
+          <svg-vue
+            icon="check"
+            width="24px"
+            height="24px"
+            class="text-success mx-2"
+          ></svg-vue>
+        </span>
       </div>
     </div>
   </div>
@@ -60,10 +68,14 @@ export default {
     "url",
     "order_time",
     "product_id",
+    "cost_ship",
   ],
   methods: {
     deleteItem(id) {
-      this.$parent.$emit("deleteItem",id);
+      this.$parent.$emit("deleteItem", id);
+    },
+    orderItem(id) {
+      this.$parent.$emit("orderItem", id);
     },
   },
 };

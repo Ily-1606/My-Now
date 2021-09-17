@@ -51,6 +51,11 @@ let routes = [
 		name: 'Thông tin tài khoản',
 		layout: "dashboard",
 		component: () => import('../views/Accounts/InfoAccount.vue'),
+	},, {
+		path: '/category/list',
+		name: 'Danh sách danh mục',
+		layout: "dashboard",
+		component: () => import('../views/Category/showCategory.vue'),
 	},
 	{
 		path: '/layout',

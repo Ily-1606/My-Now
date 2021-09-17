@@ -12,6 +12,7 @@ class bill extends Model
         'owner',
         'product_id',
         'address',
+        'salary',
         'numberphone',
         'note',
         'money',

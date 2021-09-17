@@ -4,7 +4,7 @@
       <div class="modal-body">
         <div class="font-weight-bold">
           Bạn có thể sử dụng tự động chọn location bằng cách nhấn
-          <a href="#" @click="bindLocation">vào đây</a>(vui lòng bật GPS và cho
+          <a href="#" @click="bindLocation" class="link">vào đây</a>(vui lòng bật GPS và cho
           phép quyền vị trí)
         </div>
         <div class="form-group">

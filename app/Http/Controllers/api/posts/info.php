@@ -17,10 +17,25 @@ class info extends Controller
     {
         if ($request->has("id")) {
             $id = $request->get('id');
-            $post = Posts::select('id', 'name', 'body', 'sales', 'salary', 'money', 'files', 'location', "status", "detail_infomation", "total_star", "avg_star", "sold")
-                ->where('id', '=', $id)->first();
+            $post = Posts::select(
+                    'posts.id',
+                    'posts.name',
+                    'posts.body',
+                    'posts.sales',
+                    'posts.salary',
+                    'posts.money',
+                    'posts.files',
+                    'posts.location',
+                    "posts.status",
+                    "posts.detail_infomation",
+                    "posts.total_star",
+                    "posts.avg_star",
+                    "posts.sold",
+                )
+                ->where('posts.id', '=', $id)->first();
             $post = json_encode($post);
             $post = json_decode($post, true);
+            $post["moneyF"] = $post["money"] - $post["sales"];
             $province = getLocation::getLocationFromID($post["location"]);
             if ($province) {
                 $post["location"] = $province;

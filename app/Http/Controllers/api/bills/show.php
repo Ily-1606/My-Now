@@ -19,7 +19,7 @@ class show extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             $bills = Bill::where("bills.owner", "=", $user->id)->join('posts', 'bills.product_id', 'posts.id')
-            ->select("bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status","bills.created_at as order_time","posts.files","posts.name")->get();
+            ->select("bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status","bills.created_at as order_time","posts.files","posts.name")->orderByDesc("bills.created_at")->get();
             $data = [];
             foreach ($bills as $bill) {
                 $bill->url = "/product/".InfoPost::to_slug($bill->name)."-".$bill->product_id.".html";

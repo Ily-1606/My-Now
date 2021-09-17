@@ -54,6 +54,14 @@
 						<span class="label">Danh sách tài khoản</span>
 					</router-link>
 				</a-menu-item>
+				<a-menu-item>
+					<router-link to="/category/list">
+						<span class="icon">
+							<a-icon type="tags" :style="{width: '20px', height: '20px', margin: '0px', fontSize: '18px'}" />
+						</span>
+						<span class="label">Danh sách danh mục</span>
+					</router-link>
+				</a-menu-item>
 				<a-menu-item class="menu-item-header">
 					Account Pages
 				</a-menu-item>

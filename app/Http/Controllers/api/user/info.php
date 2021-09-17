@@ -20,6 +20,7 @@ class info extends Controller
                 [
                     "status" => true,
                     "image" => $user->avatar,
+                    "role"  => $user->user_type,
                     "fullname" => $user->name
                 ]
             );

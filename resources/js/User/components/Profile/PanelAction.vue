@@ -96,6 +96,26 @@
                 </div>
               </div>
             </div>
+            <div class="border-bottom py-4" v-if="user.role == 'admin' || user.role == 'seller'">
+              <h5 class="card-title text-primary font-weight-bold">
+                Thay đổi vị trí cửa hàng (dành cho người bán)
+              </h5>
+              <div class="row my-2">
+                <div class="col-12">
+                  <map-sdk :dataCoordinate="dataCoordinate" />
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-12">
+                  <button
+                    class="btn btn-primary float-right"
+                    @click="updateCoord"
+                  >
+                    Cập nhật
+                  </button>
+                </div>
+              </div>
+            </div>
             <div class="border-bottom py-4">
               <h5 class="card-title text-primary font-weight-bold">
                 Thay đổi mật khẩu
@@ -183,9 +203,10 @@
 <script>
 import Empty from '../Others/Empty.vue';
 import Bill from '../Items/Bill.vue';
+import MapSdk from '../Others/MapSdk.vue';
 export default {
-  components: { Empty, Bill},
-  beforeMount() {
+  components: { Empty, Bill, MapSdk},
+   beforeMount() {
     this.fetchBills();
   },
   data() {
@@ -202,6 +223,10 @@ export default {
         password: "",
         new_password: "",
         new_password_confirmation: "",
+      },
+      dataCoordinate:{
+        lat: null,
+        long: null
       },
       dataBills: []
     };
@@ -252,6 +277,19 @@ export default {
       var self = this;
       Vue.axios
         .put("/api/user/updatePassword", this.dataPassword)
+        .then((response) => {
+          var res = response.data;
+          self.statusReponse = res;
+        })
+        .catch((error) => {
+          console.error(error.response);
+          self.handleError(error);
+        });
+    },
+    updateCoord(){
+      var self = this;
+       Vue.axios
+        .put("/api/user/updateCoord", this.dataCoordinate)
         .then((response) => {
           var res = response.data;
           self.statusReponse = res;

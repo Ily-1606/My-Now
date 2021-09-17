@@ -60,9 +60,21 @@ $list_apis = [
         "method" => "put"
     ),
     array(
+        "path" => '/user/updateCoord',
+        "classes" => [\App\Http\Controllers\api\user\update::class, 'updateCoord'],
+        "name" => 'updateCoord_user',
+        "method" => "put"
+    ),
+    array(
         "path" => '/locations/get',
         "classes" => [\App\Http\Controllers\api\locations\get::class, 'get'],
         "name" => 'get_locations',
+        "method" => "get"
+    ),
+    array(
+        "path" => '/locations/getNear',
+        "classes" => [\App\Http\Controllers\api\locations\countNear::class, 'count'],
+        "name" => 'get_locations_near',
         "method" => "get"
     ),
     array(
@@ -94,6 +106,11 @@ $list_apis = [
         "classes" => [\App\Http\Controllers\api\posts\edit::class, 'edit'],
         "name" => 'edit_post',
         "method" => "post"
+    ), array(
+        "path" => '/posts/CostShip',
+        "classes" => [\App\Http\Controllers\api\posts\CostShip::class, 'cost'],
+        "name" => 'CostShip',
+        "method" => "get"
     ),
     array(
         "path" => '/posts/updateStatus',

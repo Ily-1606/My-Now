@@ -103,7 +103,9 @@
         margin-bottom: 0px;
     }
 }
-
+.line-through{
+    text-decoration: line-through;
+}
 @keyframes shine {
     to {
         background-position-x: -200%;

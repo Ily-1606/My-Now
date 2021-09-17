@@ -10097,6 +10097,10 @@ h3 {
   margin-bottom: 0px;
 }
 
+.line-through {
+  text-decoration: line-through;
+}
+
 @-webkit-keyframes shine {
   to {
     background-position-x: -200%;
