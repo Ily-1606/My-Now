@@ -2189,6 +2189,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["data"],
   methods: {
@@ -46590,6 +46597,20 @@ var render = function() {
           _c("b", [_vm._v("Ghi chú:")]),
           _c("i", [_vm._v(_vm._s(_vm.data.note))])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("b", [_vm._v("Trạng thái:")]),
+        _vm._v(" "),
+        _vm.data.status == "created"
+          ? _c("span", [_vm._v("Đang xử lý")])
+          : _vm.data.status == "doing"
+          ? _c("span", [_vm._v("Đang vận chuyển")])
+          : _vm.data.status == "done"
+          ? _c("span", [_vm._v("Đã giao hàng")])
+          : _vm.data.status == "denied"
+          ? _c("span", [_vm._v("Đã từ chối đơn hàng")])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "my-2" }, [

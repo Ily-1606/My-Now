@@ -78,52 +78,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {};
+  props: ["dataBilling"],
+  methods: {
+    checkDoing: function checkDoing(index) {
+      this.dataBilling[index].status = "doing";
+      this.fecthStatus(index);
+    },
+    checkDone: function checkDone(index) {
+      this.dataBilling[index].status = "done";
+      this.fecthStatus(index);
+    },
+    checkDenied: function checkDenied(index) {
+      this.dataBilling[index].status = "denied";
+      this.fecthStatus(index);
+    },
+    fecthStatus: function fecthStatus(index) {
+      var self = this;
+      Vue.axios.put("/api/bills/updateStatus?id=".concat(this.dataBilling[index].id, "&status=").concat(this.dataBilling[index].status)).then(function (response) {
+        self.$message.success("Cập nhật thành công!");
+      })["catch"](function (error) {
+        console.error(error);
+        self.$message.error("Lỗi nội bộ!");
+      });
+    }
   }
 });
 
@@ -665,6 +643,58 @@ var transactionsData = [{
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-primary{\n\tbackground-color: #1890FF!important;\n\tcolor: #FFFFFF!important;\n}\n.bg-success{\n\tbackground-color: #52C41A!important;\n\tcolor: #FFFFFF!important;\n}\n.bg-danger{\n\tbackground-color: #F5222D!important;\n\tcolor: #FFFFFF!important;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardBillingInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CardBillingInfo.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardBillingInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardBillingInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./resources/js/Admin/components/Cards/CardBillingInfo.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/Admin/components/Cards/CardBillingInfo.vue ***!
@@ -677,15 +707,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _CardBillingInfo_vue_vue_type_template_id_355e0c52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardBillingInfo.vue?vue&type=template&id=355e0c52& */ "./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=template&id=355e0c52&");
 /* harmony import */ var _CardBillingInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CardBillingInfo.vue?vue&type=script&lang=js& */ "./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _CardBillingInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CardBillingInfo.vue?vue&type=style&index=0&lang=css& */ "./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
   _CardBillingInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _CardBillingInfo_vue_vue_type_template_id_355e0c52___WEBPACK_IMPORTED_MODULE_0__.render,
   _CardBillingInfo_vue_vue_type_template_id_355e0c52___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -1036,6 +1068,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CardBillingInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CardBillingInfo.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=template&id=355e0c52&":
 /*!************************************************************************************************!*\
   !*** ./resources/js/Admin/components/Cards/CardBillingInfo.vue?vue&type=template&id=355e0c52& ***!
@@ -1190,15 +1234,20 @@ var render = function() {
       _c(
         "a-row",
         { attrs: { gutter: [24, 24] } },
-        [
-          _c(
+        _vm._l(_vm.dataBilling, function(item, index) {
+          return _c(
             "a-col",
-            { attrs: { span: 24 } },
+            { key: item.product_id + "", attrs: { span: 24 } },
             [
               _c(
                 "a-card",
                 {
                   staticClass: "card-billing-info",
+                  class: [
+                    item.status == "doing" ? "bg-primary" : "",
+                    item.status == "done" ? "bg-success" : "",
+                    item.status == "denied" ? "bg-danger" : ""
+                  ],
                   attrs: { bordered: false }
                 },
                 [
@@ -1208,28 +1257,78 @@ var render = function() {
                     [
                       _c(
                         "a-descriptions",
-                        { attrs: { title: "Oliver Liam", column: 1 } },
+                        { attrs: { title: item.name, column: 1 } },
                         [
                           _c(
                             "a-descriptions-item",
-                            { attrs: { label: "Company Name" } },
-                            [_vm._v("\n\t\t\t\t\t\tViking Burrito\n\t\t\t\t\t")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "Email Address" } },
+                            { attrs: { label: "Số lượng" } },
                             [
                               _vm._v(
-                                "\n\t\t\t\t\t\toliver@burrito.com\n\t\t\t\t\t"
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.salary) +
+                                  "\n\t\t\t\t\t"
                               )
                             ]
                           ),
                           _vm._v(" "),
                           _c(
                             "a-descriptions-item",
-                            { attrs: { label: "VAT Number" } },
-                            [_vm._v("\n\t\t\t\t\t\tFRB1235476\n\t\t\t\t\t")]
+                            { attrs: { label: "Tổng tiền" } },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.money) +
+                                  "\n\t\t\t\t\t"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a-descriptions-item",
+                            { attrs: { label: "Số điện thoại" } },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.numberphone) +
+                                  "\n\t\t\t\t\t"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a-descriptions-item",
+                            { attrs: { label: "Địa chỉ" } },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.address) +
+                                  "\n\t\t\t\t\t"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a-descriptions-item",
+                            { attrs: { label: "Thời gian đặt" } },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.order_time) +
+                                  "\n\t\t\t\t\t"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a-descriptions-item",
+                            { attrs: { label: "Ghi chú" } },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t" +
+                                  _vm._s(item.note) +
+                                  "\n\t\t\t\t\t"
+                              )
+                            ]
                           )
                         ],
                         1
@@ -1244,355 +1343,62 @@ var render = function() {
                     [
                       _c(
                         "a-button",
-                        { attrs: { type: "link", size: "small" } },
+                        {
+                          attrs: { type: "link", size: "small" },
+                          on: {
+                            click: function($event) {
+                              return _vm.checkDoing(index)
+                            }
+                          }
+                        },
                         [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-danger",
-                                attrs: {
-                                  "fill-rule": "evenodd",
-                                  "clip-rule": "evenodd",
-                                  d:
-                                    "M9 2C8.62123 2 8.27497 2.214 8.10557 2.55279L7.38197 4H4C3.44772 4 3 4.44772 3 5C3 5.55228 3.44772 6 4 6L4 16C4 17.1046 4.89543 18 6 18H14C15.1046 18 16 17.1046 16 16V6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H12.618L11.8944 2.55279C11.725 2.214 11.3788 2 11 2H9ZM7 8C7 7.44772 7.44772 7 8 7C8.55228 7 9 7.44772 9 8V14C9 14.5523 8.55228 15 8 15C7.44772 15 7 14.5523 7 14V8ZM12 7C11.4477 7 11 7.44772 11 8V14C11 14.5523 11.4477 15 12 15C12.5523 15 13 14.5523 13 14V8C13 7.44772 12.5523 7 12 7Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
+                          _c("a-icon", { attrs: { type: "car" } }),
                           _vm._v(" "),
-                          _c("span", { staticClass: "text-danger" }, [
-                            _vm._v("DELETE")
+                          _c("span", { staticClass: "text-primary" }, [
+                            _vm._v("Đang giao")
                           ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a-button",
-                        { attrs: { type: "link", size: "small" } },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M13.5858 3.58579C14.3668 2.80474 15.6332 2.80474 16.4142 3.58579C17.1953 4.36683 17.1953 5.63316 16.4142 6.41421L15.6213 7.20711L12.7929 4.37868L13.5858 3.58579Z",
-                                  fill: "#111827"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M11.3787 5.79289L3 14.1716V17H5.82842L14.2071 8.62132L11.3787 5.79289Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-dark" }, [
-                            _vm._v("EDIT")
-                          ])
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "a-col",
-            { attrs: { span: 24 } },
-            [
-              _c(
-                "a-card",
-                {
-                  staticClass: "card-billing-info",
-                  attrs: { bordered: false }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "col-info" },
-                    [
-                      _c(
-                        "a-descriptions",
-                        { attrs: { title: "Lucas Harper", column: 1 } },
-                        [
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "Company Name" } },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\tStone Tech Zone\n\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "Email Address" } },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\tlucas@syone-tech.com\n\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "VAT Number" } },
-                            [_vm._v("\n\t\t\t\t\t\tFRB1235476\n\t\t\t\t\t")]
-                          )
                         ],
                         1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-action" },
-                    [
-                      _c(
-                        "a-button",
-                        { attrs: { type: "link", size: "small" } },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-danger",
-                                attrs: {
-                                  "fill-rule": "evenodd",
-                                  "clip-rule": "evenodd",
-                                  d:
-                                    "M9 2C8.62123 2 8.27497 2.214 8.10557 2.55279L7.38197 4H4C3.44772 4 3 4.44772 3 5C3 5.55228 3.44772 6 4 6L4 16C4 17.1046 4.89543 18 6 18H14C15.1046 18 16 17.1046 16 16V6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H12.618L11.8944 2.55279C11.725 2.214 11.3788 2 11 2H9ZM7 8C7 7.44772 7.44772 7 8 7C8.55228 7 9 7.44772 9 8V14C9 14.5523 8.55228 15 8 15C7.44772 15 7 14.5523 7 14V8ZM12 7C11.4477 7 11 7.44772 11 8V14C11 14.5523 11.4477 15 12 15C12.5523 15 13 14.5523 13 14V8C13 7.44772 12.5523 7 12 7Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-danger" }, [
-                            _vm._v("DELETE")
-                          ])
-                        ]
                       ),
                       _vm._v(" "),
                       _c(
                         "a-button",
-                        { attrs: { type: "link", size: "small" } },
+                        {
+                          attrs: { type: "link", size: "small" },
+                          on: {
+                            click: function($event) {
+                              return _vm.checkDone(index)
+                            }
+                          }
+                        },
                         [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M13.5858 3.58579C14.3668 2.80474 15.6332 2.80474 16.4142 3.58579C17.1953 4.36683 17.1953 5.63316 16.4142 6.41421L15.6213 7.20711L12.7929 4.37868L13.5858 3.58579Z",
-                                  fill: "#111827"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M11.3787 5.79289L3 14.1716V17H5.82842L14.2071 8.62132L11.3787 5.79289Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
+                          _c("a-icon", { attrs: { type: "check" } }),
                           _vm._v(" "),
-                          _c("span", { staticClass: "text-dark" }, [
-                            _vm._v("EDIT")
+                          _c("span", { staticClass: "text-success" }, [
+                            _vm._v("Đã giao")
                           ])
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "a-col",
-            { attrs: { span: 24 } },
-            [
-              _c(
-                "a-card",
-                {
-                  staticClass: "card-billing-info",
-                  attrs: { bordered: false }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "col-info" },
-                    [
-                      _c(
-                        "a-descriptions",
-                        { attrs: { title: "Oliver Liam", column: 1 } },
-                        [
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "Company Name" } },
-                            [_vm._v("\n\t\t\t\t\t\tFiber Notion\n\t\t\t\t\t")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "Email Address" } },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\tethan@fiber.com\n\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a-descriptions-item",
-                            { attrs: { label: "VAT Number" } },
-                            [_vm._v("\n\t\t\t\t\t\tFRB1235476\n\t\t\t\t\t")]
-                          )
                         ],
                         1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-action" },
-                    [
-                      _c(
-                        "a-button",
-                        { attrs: { type: "link", size: "small" } },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-danger",
-                                attrs: {
-                                  "fill-rule": "evenodd",
-                                  "clip-rule": "evenodd",
-                                  d:
-                                    "M9 2C8.62123 2 8.27497 2.214 8.10557 2.55279L7.38197 4H4C3.44772 4 3 4.44772 3 5C3 5.55228 3.44772 6 4 6L4 16C4 17.1046 4.89543 18 6 18H14C15.1046 18 16 17.1046 16 16V6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H12.618L11.8944 2.55279C11.725 2.214 11.3788 2 11 2H9ZM7 8C7 7.44772 7.44772 7 8 7C8.55228 7 9 7.44772 9 8V14C9 14.5523 8.55228 15 8 15C7.44772 15 7 14.5523 7 14V8ZM12 7C11.4477 7 11 7.44772 11 8V14C11 14.5523 11.4477 15 12 15C12.5523 15 13 14.5523 13 14V8C13 7.44772 12.5523 7 12 7Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-danger" }, [
-                            _vm._v("DELETE")
-                          ])
-                        ]
                       ),
                       _vm._v(" "),
                       _c(
                         "a-button",
-                        { attrs: { type: "link", size: "small" } },
+                        {
+                          attrs: { type: "link", size: "small" },
+                          on: {
+                            click: function($event) {
+                              return _vm.checkDenied(index)
+                            }
+                          }
+                        },
                         [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                width: "16",
-                                height: "16",
-                                viewBox: "0 0 20 20",
-                                fill: "none",
-                                xmlns: "http://www.w3.org/2000/svg"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M13.5858 3.58579C14.3668 2.80474 15.6332 2.80474 16.4142 3.58579C17.1953 4.36683 17.1953 5.63316 16.4142 6.41421L15.6213 7.20711L12.7929 4.37868L13.5858 3.58579Z",
-                                  fill: "#111827"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("path", {
-                                staticClass: "fill-muted",
-                                attrs: {
-                                  d:
-                                    "M11.3787 5.79289L3 14.1716V17H5.82842L14.2071 8.62132L11.3787 5.79289Z",
-                                  fill: "#111827"
-                                }
-                              })
-                            ]
-                          ),
+                          _c("a-icon", { attrs: { type: "warning" } }),
                           _vm._v(" "),
-                          _c("span", { staticClass: "text-dark" }, [
-                            _vm._v("EDIT")
+                          _c("span", { staticClass: "text-danger" }, [
+                            _vm._v("Báo hết")
                           ])
-                        ]
+                        ],
+                        1
                       )
                     ],
                     1
@@ -1602,7 +1408,7 @@ var render = function() {
             ],
             1
           )
-        ],
+        }),
         1
       )
     ],

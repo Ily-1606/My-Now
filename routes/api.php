@@ -191,6 +191,12 @@ $list_apis = [
         "method" => "get"
     ),
     array(
+        "path" => "bills/updateStatus",
+        "classes" => [\App\Http\Controllers\api\bills\updateStatus::class, 'update'],
+        "name" => "updateStatus_bill",
+        "method" => "put"
+    ),
+    array(
         "path" => "search",
         "classes" => [\App\Http\Controllers\api\search\search::class, 'search'],
         "name" => "search",

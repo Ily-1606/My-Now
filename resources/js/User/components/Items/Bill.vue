@@ -20,6 +20,13 @@
           <b>Ghi chú:</b><i>{{ data.note }}</i>
         </div>
       </div>
+      <div>
+        <b>Trạng thái:</b>
+        <span v-if="data.status == 'created'">Đang xử lý</span>
+        <span v-else-if="data.status == 'doing'">Đang vận chuyển</span>
+        <span v-else-if="data.status == 'done'">Đã giao hàng</span>
+        <span v-else-if="data.status == 'denied'">Đã từ chối đơn hàng</span>
+      </div>
       <div class="my-2">Thời gian đặt: {{ data.order_time }}</div>
       <div class="my-2">
         <router-link :to="data.url" tag="a" class="link"
