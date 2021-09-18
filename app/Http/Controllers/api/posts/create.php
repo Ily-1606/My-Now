@@ -23,7 +23,8 @@ class create extends Controller
             "files",
             "sales",
             "money",
-            "salary"
+            "salary",
+            "categorys"
         ];
         if($request->hasAny($require_params)){
             $user = Auth::user()->id;
@@ -31,6 +32,7 @@ class create extends Controller
                 'name'=> $request->post("name"),
                 "body"=> $request->post("body"),
                 "location"=> $request->post("location"),
+                "categorys"=> $request->post("categorys"),
                 "files" => json_encode($request->post("files")),
                 "sales"=> $request["sales"],
                 "money" => $request["money"],

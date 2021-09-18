@@ -15,10 +15,15 @@ class Posts extends Model
         'files',
         'money',
         'salary',
-        'owner'
+        'owner',
+        "categorys",
+        "sales"
     ];
     protected $hidden = [
 
+    ];
+    protected $casts = [
+        'categorys' => 'array'
     ];
     public function post()
     {

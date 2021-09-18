@@ -195,6 +195,30 @@ $list_apis = [
         "classes" => [\App\Http\Controllers\api\search\search::class, 'search'],
         "name" => "search",
         "method" => "get"
+    ),
+    array(
+        "path" => "categorys/list",
+        "classes" => [\App\Http\Controllers\api\categorys\show::class, 'list'],
+        "name" => "list_categorys",
+        "method" => "get"
+    ),
+    array(
+        "path" => "categorys/create",
+        "classes" => [\App\Http\Controllers\api\categorys\create::class, 'create'],
+        "name" => "create_categorys",
+        "method" => "post"
+    ),
+    array(
+        "path" => "categorys/delete",
+        "classes" => [\App\Http\Controllers\api\categorys\delete::class, 'delete'],
+        "name" => "delete_categorys",
+        "method" => "delete"
+    ),
+    array(
+        "path" => "search/categorys",
+        "classes" => [\App\Http\Controllers\api\search\categorys::class, 'search'],
+        "name" => "search_categorys",
+        "method" => "get"
     )
 ];
 foreach ($list_apis as $api) {

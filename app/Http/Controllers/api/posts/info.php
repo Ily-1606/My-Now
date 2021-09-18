@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\api\locations\get as getLocation;
+use App\Models\Category;
 
 class info extends Controller
 {
@@ -27,6 +28,7 @@ class info extends Controller
                     'posts.files',
                     'posts.location',
                     "posts.status",
+                    "posts.categorys",
                     "posts.detail_infomation",
                     "posts.total_star",
                     "posts.avg_star",
@@ -39,6 +41,11 @@ class info extends Controller
             $province = getLocation::getLocationFromID($post["location"]);
             if ($province) {
                 $post["location"] = $province;
+            }
+            for($i = 0; $i < count($post["categorys"]); $i++){
+                $category = $post["categorys"][$i];
+                $db_category = Category::where("id","=",$category)->select("id","name")->first();
+                $post["categorys"][$i] = $db_category;
             }
             if ($post) {
                 return response()->json([

@@ -15,7 +15,7 @@
             v-decorator="[
               'name',
               {
-                initialValue: $attrs.data ? $attrs.data.name: null,
+                initialValue: $attrs.data ? $attrs.data.name : null,
                 rules: [
                   { required: true, message: 'Vui lòng nhập thông tin!' },
                   { min: 10, message: 'Ít nhất 10 ký  tự' },
@@ -31,7 +31,7 @@
             v-decorator="[
               'body',
               {
-                initialValue: $attrs.data ? $attrs.data.body: null,
+                initialValue: $attrs.data ? $attrs.data.body : null,
                 rules: [
                   { required: true, message: 'Vui lòng nhập thông tin!' },
                   { min: 10, message: 'Ít nhất 10 ký  tự' },
@@ -48,7 +48,7 @@
             v-decorator="[
               'money',
               {
-                initialValue: $attrs.data ? $attrs.data.money: null,
+                initialValue: $attrs.data ? $attrs.data.money : null,
                 rules: [
                   { required: true, message: 'Vui lòng nhập thông tin!' },
                 ],
@@ -63,7 +63,7 @@
             v-decorator="[
               'salary',
               {
-                initialValue: $attrs.data ? $attrs.data.salary: null,
+                initialValue: $attrs.data ? $attrs.data.salary : null,
                 rules: [
                   { required: true, message: 'Vui lòng nhập thông tin!' },
                 ],
@@ -79,17 +79,53 @@
             v-decorator="[
               'sales',
               {
-                initialValue: $attrs.data ? ($attrs.data.sales ? $attrs.data.sales : null) : null,
+                initialValue: $attrs.data
+                  ? $attrs.data.sales
+                    ? $attrs.data.sales
+                    : null
+                  : null,
               },
             ]"
           />
+        </a-form-item>
+        <a-form-item label="Thể loại">
+          <a-auto-complete
+            name="categorys"
+            v-decorator="['categorys', {}]"
+            option-label-prop="data"
+            @select="onSelectCategory"
+            @search="onSearchCategory"
+          >
+            <template slot="dataSource">
+              <a-select-option
+                v-for="item in dataSource"
+                :key="item.id + ''"
+                :title="item.name"
+              >
+                {{ item.name }}
+              </a-select-option>
+            </template>
+          </a-auto-complete>
+          <div class="mt-2">
+            <template v-for="item in dataCategory">
+              <a-tag
+                :key="item.id + ''"
+                :closable="true"
+                @close="() => handleDeleteCategory(item)"
+              >
+                {{ item.name }}
+              </a-tag>
+            </template>
+          </div>
         </a-form-item>
         <a-form-item label="Địa điểm bán">
           <a-select
             label-in-value
             style="width: 100%"
             @change="changeLocation"
-            :default-value="{ key: $attrs.data ? $attrs.data.location.province_id : '1' }"
+            :default-value="{
+              key: $attrs.data ? $attrs.data.location.province_id : '1',
+            }"
           >
             <a-select-option
               v-for="province in provinces"
@@ -145,6 +181,47 @@
   padding: 30px;
 }
 </style>
+<style>
+.global-search-wrapper {
+  padding-right: 50px;
+}
+
+.global-search {
+  width: 100%;
+}
+
+.global-search.ant-select-auto-complete .ant-select-selection--single {
+  margin-right: -46px;
+}
+
+.global-search.ant-select-auto-complete
+  .ant-input-affix-wrapper
+  .ant-input:not(:last-child) {
+  padding-right: 62px;
+}
+
+.global-search.ant-select-auto-complete
+  .ant-input-affix-wrapper
+  .ant-input-suffix
+  button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.global-search-item {
+  display: flex;
+}
+
+.global-search-item-desc {
+  flex: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.global-search-item-count {
+  flex: none;
+}
+</style>
 <script>
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -166,12 +243,15 @@ export default {
       spinning: false,
       location: 1,
       mode: "create",
+      dataSource: [],
+      dataCategory: [],
     };
   },
   beforeMount: function () {
     this.getProvinces();
     if (this.$attrs.data) {
       this.location = this.$attrs.data.location;
+      this.dataCategory = this.$attrs.data.categorys;
       this.mode = "update";
       var fileList = JSON.parse(this.$attrs.data.files);
       for (let i = 0; i < fileList.length; i++) {
@@ -190,37 +270,77 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          if (this.fileList.length > 0) {
-            var json_form = values;
-            json_form.files = this.fileList.map((file) => {
-              if (file.response) return file.response.url;
-              else return file.url;
-            });
-            json_form.location = parseInt(this.location);
-            var self = this;
-            self.spinning = true;
-            let post_url = "";
-            if (this.mode == "create") post_url = "/api/posts/create";
-            else if (this.mode == "update")
-              post_url = `/api/posts/edit?id=${this.$attrs.data.id}`;
-            Vue.axios
-              .post(post_url, json_form)
-              .then((response) => {
-                self.spinning = false;
-                if (!response.data.result) alert(response.data.msg);
-              })
-              .catch((error) => {
-                self.spinning = false;
-                console.log(error);
-              });
-          } else {
-            alert("Vui lòng upload ít nhất 1 ảnh sản phẩm!");
+          if (this.fileList.length == 0) {
+            this.$message.error("Vui lòng upload ít nhất 1 ảnh sản phẩm!");
+            return;
+          } else if (this.dataCategory.length == 0) {
+            this.$message.error("Vui lòng chọn thể loại sản phẩm!");
+            return;
           }
+          var json_form = values;
+          json_form.files = this.fileList.map((file) => {
+            if (file.response) return file.response.url;
+            else return file.url;
+          });
+          json_form.categorys = this.dataCategory.map(
+            (categogry) => categogry.id
+          );
+          json_form.location = parseInt(this.location);
+          var self = this;
+          self.spinning = true;
+          let post_url = "";
+          if (this.mode == "create") post_url = "/api/posts/create";
+          else if (this.mode == "update")
+            post_url = `/api/posts/edit?id=${this.$attrs.data.id}`;
+          Vue.axios
+            .post(post_url, json_form)
+            .then((response) => {
+              self.spinning = false;
+              if (!response.data.result) alert(response.data.msg);
+            })
+            .catch((error) => {
+              self.spinning = false;
+              console.log(error);
+            });
         }
       });
     },
     changeLocation(value) {
       this.location = value.key;
+    },
+    onSearchCategory(searchText) {
+      //this.dataSource = !searchText ? [] : [searchText, searchText.repeat(2), searchText.repeat(3)];
+      var self = this;
+      Vue.axios
+        .get(`/api/search/categorys?q=${searchText}`)
+        .then((response) => {
+          var data = response.data;
+          self.dataSource = data.data;
+        })
+        .catch((error) => {
+          self.$message.error("Lỗi nội bộ!");
+          console.error(error);
+        });
+    },
+    onSelectCategory(value) {
+      let check = false;
+      this.dataCategory.forEach((element) => {
+        if (element.id == value) {
+          check = false;
+          return false;
+        }
+      });
+      if (!check) {
+        this.dataSource.forEach((element) => {
+          if (element.id == value) {
+            this.dataCategory.push(element);
+          }
+        });
+      }
+    },
+    handleDeleteCategory(removedTag) {
+      const tags = this.dataCategory.filter((tag) => tag !== removedTag);
+      this.dataCategory = tags;
     },
     handleCancel() {
       this.previewVisible = false;

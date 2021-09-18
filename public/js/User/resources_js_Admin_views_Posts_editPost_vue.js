@@ -305,6 +305,83 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 function getBase64(file) {
   return new Promise(function (resolve, reject) {
     var reader = new FileReader();
@@ -333,7 +410,9 @@ function getBase64(file) {
       provinces: [],
       spinning: false,
       location: 1,
-      mode: "create"
+      mode: "create",
+      dataSource: [],
+      dataCategory: []
     };
   },
   beforeMount: function beforeMount() {
@@ -341,6 +420,7 @@ function getBase64(file) {
 
     if (this.$attrs.data) {
       this.location = this.$attrs.data.location;
+      this.dataCategory = this.$attrs.data.categorys;
       this.mode = "update";
       var fileList = JSON.parse(this.$attrs.data.files);
 
@@ -361,37 +441,82 @@ function getBase64(file) {
       e.preventDefault();
       this.form.validateFields(function (err, values) {
         if (!err) {
-          if (_this.fileList.length > 0) {
-            var json_form = values;
-            json_form.files = _this.fileList.map(function (file) {
-              if (file.response) return file.response.url;else return file.url;
-            });
-            json_form.location = parseInt(_this.location);
-            var self = _this;
-            self.spinning = true;
-            var post_url = "";
-            if (_this.mode == "create") post_url = "/api/posts/create";else if (_this.mode == "update") post_url = "/api/posts/edit?id=".concat(_this.$attrs.data.id);
-            Vue.axios.post(post_url, json_form).then(function (response) {
-              self.spinning = false;
-              if (!response.data.result) alert(response.data.msg);
-            })["catch"](function (error) {
-              self.spinning = false;
-              console.log(error);
-            });
-          } else {
-            alert("Vui lòng upload ít nhất 1 ảnh sản phẩm!");
+          if (_this.fileList.length == 0) {
+            _this.$message.error("Vui lòng upload ít nhất 1 ảnh sản phẩm!");
+
+            return;
+          } else if (_this.dataCategory.length == 0) {
+            _this.$message.error("Vui lòng chọn thể loại sản phẩm!");
+
+            return;
           }
+
+          var json_form = values;
+          json_form.files = _this.fileList.map(function (file) {
+            if (file.response) return file.response.url;else return file.url;
+          });
+          json_form.categorys = _this.dataCategory.map(function (categogry) {
+            return categogry.id;
+          });
+          json_form.location = parseInt(_this.location);
+          var self = _this;
+          self.spinning = true;
+          var post_url = "";
+          if (_this.mode == "create") post_url = "/api/posts/create";else if (_this.mode == "update") post_url = "/api/posts/edit?id=".concat(_this.$attrs.data.id);
+          Vue.axios.post(post_url, json_form).then(function (response) {
+            self.spinning = false;
+            if (!response.data.result) alert(response.data.msg);
+          })["catch"](function (error) {
+            self.spinning = false;
+            console.log(error);
+          });
         }
       });
     },
     changeLocation: function changeLocation(value) {
       this.location = value.key;
     },
+    onSearchCategory: function onSearchCategory(searchText) {
+      //this.dataSource = !searchText ? [] : [searchText, searchText.repeat(2), searchText.repeat(3)];
+      var self = this;
+      Vue.axios.get("/api/search/categorys?q=".concat(searchText)).then(function (response) {
+        var data = response.data;
+        self.dataSource = data.data;
+      })["catch"](function (error) {
+        self.$message.error("Lỗi nội bộ!");
+        console.error(error);
+      });
+    },
+    onSelectCategory: function onSelectCategory(value) {
+      var _this2 = this;
+
+      var check = false;
+      this.dataCategory.forEach(function (element) {
+        if (element.id == value) {
+          check = false;
+          return false;
+        }
+      });
+
+      if (!check) {
+        this.dataSource.forEach(function (element) {
+          if (element.id == value) {
+            _this2.dataCategory.push(element);
+          }
+        });
+      }
+    },
+    handleDeleteCategory: function handleDeleteCategory(removedTag) {
+      var tags = this.dataCategory.filter(function (tag) {
+        return tag !== removedTag;
+      });
+      this.dataCategory = tags;
+    },
     handleCancel: function handleCancel() {
       this.previewVisible = false;
     },
     handlePreview: function handlePreview(file) {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -410,8 +535,8 @@ function getBase64(file) {
                 file.preview = _context.sent;
 
               case 4:
-                _this2.previewImage = file.url || file.preview;
-                _this2.previewVisible = true;
+                _this3.previewImage = file.url || file.preview;
+                _this3.previewVisible = true;
 
               case 6:
               case "end":
@@ -480,6 +605,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.spin-content[data-v-83f12902] {\r\n  border: 1px solid #91d5ff;\r\n  background-color: #e6f7ff;\r\n  padding: 30px;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.global-search-wrapper {\r\n  padding-right: 50px;\n}\n.global-search {\r\n  width: 100%;\n}\n.global-search.ant-select-auto-complete .ant-select-selection--single {\r\n  margin-right: -46px;\n}\n.global-search.ant-select-auto-complete\r\n  .ant-input-affix-wrapper\r\n  .ant-input:not(:last-child) {\r\n  padding-right: 62px;\n}\n.global-search.ant-select-auto-complete\r\n  .ant-input-affix-wrapper\r\n  .ant-input-suffix\r\n  button {\r\n  border-top-left-radius: 0;\r\n  border-bottom-left-radius: 0;\n}\n.global-search-item {\r\n  display: flex;\n}\n.global-search-item-desc {\r\n  flex: auto;\r\n  text-overflow: ellipsis;\r\n  overflow: hidden;\n}\n.global-search-item-count {\r\n  flex: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1310,6 +1459,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formPost_vue_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formPost.vue?vue&type=style&index=2&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formPost_vue_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formPost_vue_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./resources/js/Admin/views/Posts/editPost.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/Admin/views/Posts/editPost.vue ***!
@@ -1364,7 +1543,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _formPost_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formPost.vue?vue&type=script&lang=js& */ "./resources/js/Admin/views/Posts/formPost.vue?vue&type=script&lang=js&");
 /* harmony import */ var _formPost_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./formPost.vue?vue&type=style&index=0&lang=css& */ "./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _formPost_vue_vue_type_style_index_1_id_83f12902_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./formPost.vue?vue&type=style&index=1&id=83f12902&scoped=true&lang=css& */ "./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=1&id=83f12902&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _formPost_vue_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./formPost.vue?vue&type=style&index=2&lang=css& */ "./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -1372,9 +1552,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* normalize component */
 
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__.default)(
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_5__.default)(
   _formPost_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _formPost_vue_vue_type_template_id_83f12902_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _formPost_vue_vue_type_template_id_83f12902_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -1446,6 +1627,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formPost_vue_vue_type_style_index_1_id_83f12902_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formPost.vue?vue&type=style&index=1&id=83f12902&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=1&id=83f12902&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formPost_vue_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formPost.vue?vue&type=style&index=2&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/views/Posts/formPost.vue?vue&type=style&index=2&lang=css&");
 
 
 /***/ }),
@@ -1682,7 +1876,7 @@ var render = function() {
                           }
                         ],
                         expression:
-                          "[\n            'name',\n            {\n              initialValue: $attrs.data ? $attrs.data.name: null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n                { min: 10, message: 'Ít nhất 10 ký  tự' },\n              ],\n            },\n          ]"
+                          "[\n            'name',\n            {\n              initialValue: $attrs.data ? $attrs.data.name : null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n                { min: 10, message: 'Ít nhất 10 ký  tự' },\n              ],\n            },\n          ]"
                       }
                     ],
                     attrs: { name: "name", placeholder: "Nhập tên sản phẩm" }
@@ -1715,7 +1909,7 @@ var render = function() {
                           }
                         ],
                         expression:
-                          "[\n            'body',\n            {\n              initialValue: $attrs.data ? $attrs.data.body: null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n                { min: 10, message: 'Ít nhất 10 ký  tự' },\n              ],\n            },\n          ]"
+                          "[\n            'body',\n            {\n              initialValue: $attrs.data ? $attrs.data.body : null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n                { min: 10, message: 'Ít nhất 10 ký  tự' },\n              ],\n            },\n          ]"
                       }
                     ],
                     attrs: {
@@ -1751,7 +1945,7 @@ var render = function() {
                           }
                         ],
                         expression:
-                          "[\n            'money',\n            {\n              initialValue: $attrs.data ? $attrs.data.money: null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n              ],\n            },\n          ]"
+                          "[\n            'money',\n            {\n              initialValue: $attrs.data ? $attrs.data.money : null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n              ],\n            },\n          ]"
                       }
                     ],
                     staticStyle: { width: "100%" },
@@ -1788,7 +1982,7 @@ var render = function() {
                           }
                         ],
                         expression:
-                          "[\n            'salary',\n            {\n              initialValue: $attrs.data ? $attrs.data.salary: null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n              ],\n            },\n          ]"
+                          "[\n            'salary',\n            {\n              initialValue: $attrs.data ? $attrs.data.salary : null,\n              rules: [\n                { required: true, message: 'Vui lòng nhập thông tin!' },\n              ],\n            },\n          ]"
                       }
                     ],
                     staticStyle: { width: "100%" },
@@ -1821,7 +2015,7 @@ var render = function() {
                           }
                         ],
                         expression:
-                          "[\n            'sales',\n            {\n              initialValue: $attrs.data ? ($attrs.data.sales ? $attrs.data.sales : null) : null,\n            },\n          ]"
+                          "[\n            'sales',\n            {\n              initialValue: $attrs.data\n                ? $attrs.data.sales\n                  ? $attrs.data.sales\n                  : null\n                : null,\n            },\n          ]"
                       }
                     ],
                     staticStyle: { width: "100%" },
@@ -1831,6 +2025,84 @@ var render = function() {
                       placeholder: "Nhập số tiền giảm giá"
                     }
                   })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "a-form-item",
+                { attrs: { label: "Thể loại" } },
+                [
+                  _c(
+                    "a-auto-complete",
+                    {
+                      directives: [
+                        {
+                          name: "decorator",
+                          rawName: "v-decorator",
+                          value: ["categorys", {}],
+                          expression: "['categorys', {}]"
+                        }
+                      ],
+                      attrs: { name: "categorys", "option-label-prop": "data" },
+                      on: {
+                        select: _vm.onSelectCategory,
+                        search: _vm.onSearchCategory
+                      }
+                    },
+                    [
+                      _c(
+                        "template",
+                        { slot: "dataSource" },
+                        _vm._l(_vm.dataSource, function(item) {
+                          return _c(
+                            "a-select-option",
+                            { key: item.id + "", attrs: { title: item.name } },
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(item.name) +
+                                  "\n            "
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-2" },
+                    [
+                      _vm._l(_vm.dataCategory, function(item) {
+                        return [
+                          _c(
+                            "a-tag",
+                            {
+                              key: item.id + "",
+                              attrs: { closable: true },
+                              on: {
+                                close: function() {
+                                  return _vm.handleDeleteCategory(item)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(item.name) +
+                                  "\n            "
+                              )
+                            ]
+                          )
+                        ]
+                      })
+                    ],
+                    2
+                  )
                 ],
                 1
               ),

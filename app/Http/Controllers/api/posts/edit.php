@@ -25,6 +25,7 @@ class edit extends Controller
             $post->body = $request->post("body");
             $post->money = $request->post("money");
             $post->sales = $request->post("sales");
+            $post->categorys = $request->post("categorys");
             $post->location = json_encode($request->post("location"));
             $post->salary = $request->post("salary");
             $post->save();
