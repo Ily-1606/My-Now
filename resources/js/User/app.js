@@ -41,7 +41,14 @@ import Profile from './components/Profile/Index.vue'
 import Product from './components/Product/Index.vue'
 import Cart from './components/Cart/Index.vue'
 import Search from './components/Search/Index.vue'
+import Page404 from './components/Others/404.vue';
+import Category from './components/Category/Index.vue';
 const routers = [
+    {
+        name: "404",
+        path: "*",
+        component: Page404
+    },
     {
         name: 'home',
         path: '/',
@@ -76,6 +83,11 @@ const routers = [
         name: "search",
         path: "/search/:keyWord",
         component: Search
+    },
+    {
+        name: "category",
+        path: "/category/:id",
+        component: Category
     }
 ]
 Vue.prototype.userInfo = {

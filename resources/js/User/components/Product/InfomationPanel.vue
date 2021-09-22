@@ -65,7 +65,7 @@
         </template>
         <template v-else>
           Giá:
-          <h5 class="font-weight-bold text-success">{{ dataProduct.money }}</h5>
+          <span class="font-weight-bold text-success h5">{{ dataProduct.money }} VND</span>
         </template>
       </div>
       <div class="my-2">

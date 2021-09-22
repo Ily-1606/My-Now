@@ -38,6 +38,9 @@ $routes = [
     ], [
         'name' => "search",
         "path" => "/search/{any}"
+    ], [
+        'name' => "category",
+        "path" => "/category/{any}"
     ]
 ];
 foreach ($routes as $route) {

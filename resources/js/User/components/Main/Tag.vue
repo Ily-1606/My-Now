@@ -1,13 +1,15 @@
 <template>
-    <div class="px-3 py-2 rounded font-weight-bold border-white text-white d-inline-block border">
+    <router-link class="px-3 py-2 rounded font-weight-bold border-white text-white d-inline-block border" tag="a" :to="url">
         {{text}}
-    </div>
+    </router-link>
 </template>
 <script>
 export default {
-    setup() {
-        
+    data(){
+        return{
+            url: `/category/${this.id}`
+        }
     },
-    props: ['tag','text']
+    props: ['tag','text',"id"]
 }
 </script>

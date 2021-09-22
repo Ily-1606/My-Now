@@ -14,10 +14,27 @@
           <detail-panel :dataProduct="infoProduct" />
         </div>
       </div>
+      <div class="row my-4" v-if="infoProduct.categorys.length > 0">
+        <div class="col-12">
+          <div class="card rounded">
+            <div class="card-body">
+              <h5 class="card-title">Từ khóa liên quan</h5>
+              <div class="card-text my-4">
+                <category
+                  :data="item"
+                  v-for="item in infoProduct.categorys"
+                  :key="item.id"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </div>
 </template>
 <script>
+import Category from "../Items/Category.vue";
 import DetailPanel from "./DetailPanel.vue";
 import ImagePanel from "./ImagePanel.vue";
 import InfomationPanel from "./InfomationPanel.vue";
@@ -30,7 +47,7 @@ export default {
   beforeMount() {
     this.loadInfoProduct();
   },
-  components: { ImagePanel, InfomationPanel, DetailPanel },
+  components: { ImagePanel, InfomationPanel, DetailPanel, Category },
   methods: {
     loadInfoProduct() {
       var self = this;

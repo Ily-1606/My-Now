@@ -45,6 +45,7 @@ class info extends Controller
             for($i = 0; $i < count($post["categorys"]); $i++){
                 $category = $post["categorys"][$i];
                 $db_category = Category::where("id","=",$category)->select("id","name")->first();
+                $db_category["url"] = "/category/".$db_category["id"];
                 $post["categorys"][$i] = $db_category;
             }
             if ($post) {

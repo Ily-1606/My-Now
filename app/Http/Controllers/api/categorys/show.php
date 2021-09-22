@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class show extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware("isAdmin");
-    }
     public function list(Request $request)
     {
         $perpage = 10;

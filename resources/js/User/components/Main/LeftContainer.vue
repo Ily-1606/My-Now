@@ -22,21 +22,8 @@
         </div>
       </form>
     </div>
-    <div class="mb-4">
-      <Tag text="All" class="mr-3 mb-3" />
-      <Tag text="Đồ ăn" class="mr-3 mb-3" />
-      <Tag text="Đồ uống" class="mr-3 mb-3" />
-      <Tag text="Đồ chay" class="mr-3 mb-3" />
-      <Tag text="Bánh kem" class="mr-3 mb-3" />
-      <Tag text="Tráng miệng" class="mr-3 mb-3" />
-      <Tag text="Homemade" class="mr-3 mb-3" />
-      <Tag text="Vỉa hè" class="mr-3 mb-3" />
-      <Tag text="Pizza/Burger" class="mr-3 mb-3" />
-      <Tag text="Món gà" class="mr-3 mb-3" />
-      <Tag text="Món lẩu" class="mr-3 mb-3" />
-      <Tag text="Sushi" class="mr-3 mb-3" />
-      <Tag text="Mì phở" class="mr-3 mb-3" />
-      <Tag text="Cơm hộp" class="mr-3 mb-3" />
+    <div class="mb-4" v-if="categoryList != null">
+      <Tag :text="item.name" class="mr-3 mb-3" v-for="item in categoryList" :key="item.id" :id="item.id" />
     </div>
   </div>
 </template>
@@ -47,11 +34,13 @@ export default {
   props: ["locationData"],
   data(){
     return {
-      dataNear: null
+      dataNear: null,
+      categoryList: null
     }
   },
   beforeMount(){
     this.getDataNear()
+    this.getCategory();
   },
   methods: {
     getDataNear() {
@@ -68,6 +57,17 @@ export default {
           console.error(error);
         });
     },
+    getCategory(){
+      var self = this;
+      Vue.axios
+      .get(`/api/categorys/list`)
+      .then(response =>{
+        self.categoryList = response.data.data
+      })
+      .catch(error =>{
+        console.error(error);
+      });
+    }
   },
 };
 </script>

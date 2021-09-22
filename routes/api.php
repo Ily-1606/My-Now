@@ -225,6 +225,12 @@ $list_apis = [
         "classes" => [\App\Http\Controllers\api\search\categorys::class, 'search'],
         "name" => "search_categorys",
         "method" => "get"
+    ),
+    array(
+        "path" => "search/categorySearchPost",
+        "classes" => [\App\Http\Controllers\api\search\categorySearchPost::class, 'search'],
+        "name" => "categorySearchPost",
+        "method" => "get"
     )
 ];
 foreach ($list_apis as $api) {
