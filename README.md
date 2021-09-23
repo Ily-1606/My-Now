@@ -15,7 +15,9 @@ Clone repo này về và cd vào trong nó
 Import file now.vn.sql vào database
 
 Sử dụng GPS và đăng nhập bằng facebook (nên yêu cầu phải sử dụng SSL), vui lòng thêm https để sử dụng
+
 Thêm now.vn.test vào .host file
+
 Google Map SDK chưa kích hoạt thanh toán, vui lòng đổi key để sủ dụng
 
 ## Development
