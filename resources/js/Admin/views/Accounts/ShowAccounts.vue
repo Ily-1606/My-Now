@@ -20,6 +20,7 @@
           <a-avatar slot="avatar" :src="item.avatar" />
         </a-list-item-meta>
         <div v-if="item.user_type == 'admin'">Quản trị viên</div>
+        <div v-if="item.user_type == 'seller'">Người bán</div>
         <div v-else-if="item.user_type == 'member'">Người dùng</div>
       </a-list-item>
       <div v-if="loading && !busy" class="demo-loading-container">

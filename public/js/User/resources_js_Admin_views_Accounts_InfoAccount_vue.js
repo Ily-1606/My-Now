@@ -136,6 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1173,8 +1174,14 @@ var render = function() {
                                         [
                                           _c(
                                             "a-select-option",
-                                            { attrs: { value: "normal" } },
+                                            { attrs: { value: "member" } },
                                             [_vm._v("Mặc định")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a-select-option",
+                                            { attrs: { value: "seller" } },
+                                            [_vm._v("Người bán")]
                                           ),
                                           _vm._v(" "),
                                           _c(

@@ -55,6 +55,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   directives: {
@@ -494,6 +495,10 @@ var render = function() {
                     _vm._v(" "),
                     item.user_type == "admin"
                       ? _c("div", [_vm._v("Quản trị viên")])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    item.user_type == "seller"
+                      ? _c("div", [_vm._v("Người bán")])
                       : item.user_type == "member"
                       ? _c("div", [_vm._v("Người dùng")])
                       : _vm._e()

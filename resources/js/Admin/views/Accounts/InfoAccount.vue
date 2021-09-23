@@ -97,7 +97,8 @@
                     v-model="dataInfo.user_type"
                     class="my-10"
                   >
-                    <a-select-option value="normal">Mặc định</a-select-option>
+                    <a-select-option value="member">Mặc định</a-select-option>
+                    <a-select-option value="seller">Người bán</a-select-option>
                     <a-select-option value="admin"
                       >Quản trị viên</a-select-option
                     >
