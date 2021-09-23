@@ -19,11 +19,15 @@ class show extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             if ($user->user_type == "admin" || $user->user_type == "seller") {
-                $bills = Bill::join('posts', 'bills.product_id', 'posts.id')
-                    ->select("bills.id","bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status", "bills.created_at as order_time", "posts.files", "posts.name", "posts.salary")->orderByDesc("bills.created_at")->get();
+                if ($user->user_type == "seller")
+                    $bills = Bill::join('posts', 'bills.product_id', 'posts.id')->where("posts.owner","=",$user->id)
+                        ->select("bills.id", "bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status", "bills.created_at as order_time", "posts.files", "posts.name", "posts.salary")->orderByDesc("bills.created_at")->get();
+                else
+                    $bills = Bill::join('posts', 'bills.product_id', 'posts.id')
+                        ->select("bills.id", "bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status", "bills.created_at as order_time", "posts.files", "posts.name", "posts.salary")->orderByDesc("bills.created_at")->get();
             } else {
                 $bills = Bill::where("bills.owner", "=", $user->id)->join('posts', 'bills.product_id', 'posts.id')
-                    ->select("bills.id","bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status", "bills.created_at as order_time", "posts.files", "posts.name","posts.salary")->orderByDesc("bills.created_at")->get();
+                    ->select("bills.id", "bills.product_id", "bills.address", "bills.numberphone", "bills.note", "bills.money", "bills.status", "bills.created_at as order_time", "posts.files", "posts.name", "posts.salary")->orderByDesc("bills.created_at")->get();
             }
             $data = [];
             foreach ($bills as $bill) {

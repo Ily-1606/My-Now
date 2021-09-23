@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api\posts;
 
 use App\Http\Controllers\Controller;
 use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class delete extends Controller
@@ -17,6 +19,11 @@ class delete extends Controller
     {
         $post = Posts::find($request->get('id'));
         if ($post) {
+            $user = Auth::user();
+            if ($user->user_type == "seller") {
+                if ($post->owner != $user->id)
+                    return;
+            }
             $files = json_decode($post->files, true);
             foreach ($files as $file) {
                 if (Storage::disk("public_uploads")->exists($file))

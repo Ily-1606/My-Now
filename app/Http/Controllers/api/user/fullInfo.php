@@ -10,7 +10,7 @@ class fullInfo extends Controller
 {
     public function __construct()
     {
-        $this->middleware('isAdmin');
+        $this->middleware('isSupperUser');
     }
     public function fullInfo(Request $request)
     {

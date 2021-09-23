@@ -34,6 +34,7 @@ window.Vue = Vue;
 Vue.component("layout-default", DefaultLayout);
 Vue.component("layout-dashboard", DashboardLayout);
 Vue.component("layout-dashboard-rtl", DashboardRTLLayout);
+Vue.prototype.$userInfo = window.userInfo;
 
 new Vue({
   router,

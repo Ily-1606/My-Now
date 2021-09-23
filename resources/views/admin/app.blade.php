@@ -23,6 +23,11 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        window.userInfo = {
+            role: "{{$role}}"
+        }
+    </script>
     <div id="app">
         <main class="py-4">
             @yield('content')

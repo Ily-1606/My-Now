@@ -7,6 +7,8 @@ use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\api\posts\info as InfoPost;
+use Illuminate\Support\Facades\Auth;
+
 class show extends Controller
 {
     public function show(Request $request)
@@ -27,9 +29,9 @@ class show extends Controller
         }
         $orderBy .= " updated_at desc";
         //echo $orderBy;
-        if ($request->get("userId")) {
+        if ($request->get("userId") || Auth::user()->user_type == "selller") {
             $post = DB::table("posts")->where("owner", '=', $request->get("userId"))->orderBy('updated_at', 'desc')->paginate($perpage, ['id', 'name', 'body', 'location', 'files', 'money', 'salary', 'sold', 'sales'])->appends(request()->query());
-        } else {
+        }else {
             $post = DB::table("posts")->where($wheres)->orderByRaw($orderBy)->paginate($perpage, ['id', 'name', 'body', 'location', 'files', 'money', 'salary', 'sold', 'sales'])->appends(request()->query());
         }
         //add link 

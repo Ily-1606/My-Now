@@ -10,7 +10,7 @@ class updateStatus extends Controller
 {
     public function __construct()
     {
-        $this->middleware("isAdmin");
+        $this->middleware("isSupperUser");
     }
     public function update(Request $request)
     {
